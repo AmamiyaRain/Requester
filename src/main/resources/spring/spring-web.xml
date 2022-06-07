@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task-3.2.xsd ">
+    <!-- 配置SpringMVC -->
+    <!-- 1.开启SpringMVC注解模式 -->
+    <!-- 简化配置：
+        (1)自动注册DefaultAnootationHandlerMapping,AnotationMethodHandlerAdapter
+        (2)提供一些列：数据绑定，数字和日期的format @NumberFormat, @DateTimeFormat, xml,json默认读写支持
+    -->
+    <mvc:annotation-driven/>
+
+    <!-- 2.静态资源默认servlet配置
+        (1)加入对静态资源的处理：js,gif,png
+        (2)允许使用"/"做整体映射
+     -->
+    <mvc:default-servlet-handler/>
+
+    <!-- 3.配置jsp 显示ViewResolver -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <!-- 4.扫描web相关的bean -->
+    <context:component-scan base-package="com.web.controllers"/>
+    <context:component-scan base-package="com.web.configs"/>
+
+    <!-- 重要！配置swagger资源不被拦截 -->
+    <mvc:resources location="classpath:/META-INF/resources/" mapping="doc.html"/>
+    <mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"/>
+    <!-- 重要！将你的Swagger2Config配置类注入 -->
+    <bean id="swagger2Config" class="com.web.swagger.config.Swagger2Config"/>
+    <!--	ExceptionHandler-->
+    <bean id="exceptionHandler" class="com.web.base.exceptions.handler.GlobalExceptionHandler"/>
+    <bean id="ossConfig" class="com.web.configs.aliyun.AliYunOSSConfig"/>
+    <!-- 配置文件上传解析器，id 是固定的 multipartResolver -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设置上传大小，单位字节 -->
+        <property name="maxUploadSize" value="2097152"/>
+    </bean>
+    <!-- 配置redisUtil -->
+    <bean id="redisUtil" class="com.web.util.redis.RedisUtil"/>
+    <!-- 扫描Component -->
+    <context:component-scan base-package="com.web.scheduled"/>
+    <!-- 开启这个配置，spring才能识别@Scheduled注解   -->
+    <task:annotation-driven scheduler="qbScheduler"/>
+    <task:scheduler id="qbScheduler" pool-size="10"/>
+
+</beans>

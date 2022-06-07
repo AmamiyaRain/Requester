@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.web.mapper.sequence.SequenceMapper">
+    <resultMap id="BaseResultMap" type="com.web.pojo.PO.sequence.SequencePO">
+        <!--@mbg.generated-->
+        <!--@Table final_sequence-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="sequence_name" jdbcType="VARCHAR" property="sequenceName"/>
+        <result column="sequence_desc" jdbcType="VARCHAR" property="sequenceDesc"/>
+        <result column="is_cookie_inherit" jdbcType="BOOLEAN" property="isCookieInherit"/>
+        <result column="sequence_owner_id" jdbcType="INTEGER" property="sequenceOwnerId"/>
+        <result column="sequence_requests" jdbcType="OTHER" property="sequenceRequests"
+                typeHandler="com.web.util.json.IntegerListTypeHandler"/>
+        <result column="sequence_enabled" jdbcType="BOOLEAN" property="sequenceEnabled"/>
+        <result column="sequence_repeat_time" jdbcType="INTEGER" property="sequenceRepeatTime"/>
+        <result column="sequence_repeat_time_unit" jdbcType="VARCHAR" property="sequenceRepeatTimeUnit"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+    <resultMap id="RequestsListMap" type="com.web.pojo.BO.sequence.SequenceRequestsListBO">
+        <result column="sequence_requests" jdbcType="OTHER" property="sequenceRequests"
+                typeHandler="com.web.util.json.IntegerListTypeHandler"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        id, sequence_name, sequence_desc, is_cookie_inherit, sequence_owner_id,
+        sequence_requests,sequence_enabled,sequence_repeat_time,sequence_repeat_time_unit,
+        create_time
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from final_sequence
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        <!--@mbg.generated-->
+        delete
+        from final_sequence
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.web.pojo.PO.sequence.SequencePO"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into final_sequence (sequence_name, sequence_desc, is_cookie_inherit,
+                                    sequence_owner_id, sequence_requests, sequence_enabled, sequence_repeat_time,
+                                    sequence_repeat_time_unit, create_time)
+        values (#{sequenceName,jdbcType=VARCHAR}, #{sequenceDesc,jdbcType=VARCHAR}, #{isCookieInherit,jdbcType=BOOLEAN},
+                #{sequenceOwnerId,jdbcType=INTEGER},
+                #{sequenceRequests,jdbcType=OTHER,typeHandler=com.web.util.json.IntegerListTypeHandler},
+                #{sequenceEnabled,jdbcType=BOOLEAN},#{sequenceRepeatTime,jdbcType=INTEGER},#{sequenceRepeatTimeUnit,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.web.pojo.PO.sequence.SequencePO"
+            useGeneratedKeys="true">
+        <!--@mbg.generated-->
+        insert into final_sequence
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="sequenceName != null">
+                sequence_name,
+            </if>
+            <if test="sequenceDesc != null">
+                sequence_desc,
+            </if>
+            <if test="isCookieInherit != null">
+                is_cookie_inherit,
+            </if>
+            <if test="sequenceOwnerId != null">
+                sequence_owner_id,
+            </if>
+            <if test="sequenceRequests != null">
+                sequence_requests,
+            </if>
+            <if test="sequenceEnabled != null">
+                sequence_enabled,
+            </if>
+            <if test="sequenceRepeatTime != null">
+                sequence_repeat_time,
+            </if>
+            <if test="sequenceRepeatTimeUnit != null">
+                sequence_repeat_time_unit,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="sequenceName != null">
+                #{sequenceName,jdbcType=VARCHAR},
+            </if>
+            <if test="sequenceDesc != null">
+                #{sequenceDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="isCookieInherit != null">
+                #{isCookieInherit,jdbcType=BOOLEAN},
+            </if>
+            <if test="sequenceOwnerId != null">
+                #{sequenceOwnerId,jdbcType=INTEGER},
+            </if>
+            <if test="sequenceRequests != null">
+                #{sequenceRequests,jdbcType=OTHER,typeHandler=com.web.util.json.IntegerListTypeHandler},
+            </if>
+            <if test="sequenceEnabled != null">
+                #{sequenceEnabled,jdbcType=BOOLEAN},
+            </if>
+            <if test="sequenceRepeatTime != null">
+                #{sequenceRepeatTime,jdbcType=INTEGER},
+            </if>
+            <if test="sequenceRepeatTimeUnit != null">
+                #{sequenceRepeatTimeUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.web.pojo.PO.sequence.SequencePO">
+        <!--@mbg.generated-->
+        update final_sequence
+        <set>
+            <if test="sequenceName != null">
+                sequence_name = #{sequenceName,jdbcType=VARCHAR},
+            </if>
+            <if test="sequenceDesc != null">
+                sequence_desc = #{sequenceDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="isCookieInherit != null">
+                is_cookie_inherit = #{isCookieInherit,jdbcType=BOOLEAN},
+            </if>
+            <if test="sequenceOwnerId != null">
+                sequence_owner_id = #{sequenceOwnerId,jdbcType=INTEGER},
+            </if>
+            <if test="sequenceRequests != null">
+                sequence_requests = #{sequenceRequests,jdbcType=OTHER,typeHandler=com.web.util.json.IntegerListTypeHandler},
+            </if>
+            <if test="sequenceEnabled != null">
+                sequence_enabled = #{sequenceEnabled,jdbcType=BOOLEAN},
+            </if>
+            <if test="sequenceRepeatTime != null">
+                sequence_repeat_time = #{sequenceRepeatTime,jdbcType=INTEGER},
+            </if>
+            <if test="sequenceRepeatTimeUnit != null">
+                sequence_repeat_time_unit = #{sequenceRepeatTimeUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.web.pojo.PO.sequence.SequencePO">
+        <!--@mbg.generated-->
+        update final_sequence
+        set sequence_name        = #{sequenceName,jdbcType=VARCHAR},
+            sequence_desc        = #{sequenceDesc,jdbcType=VARCHAR},
+            is_cookie_inherit    = #{isCookieInherit,jdbcType=BOOLEAN},
+            sequence_owner_id    = #{sequenceOwnerId,jdbcType=INTEGER},
+            sequence_requests    = #{sequenceRequests,jdbcType=OTHER,typeHandler=com.web.util.json.IntegerListTypeHandler},
+            sequence_enabled     = #{sequenceEnabled,jdbcType=BOOLEAN},
+            sequence_repeat_time = #{sequenceRepeatTime,jdbcType=INTEGER},
+            sequence_repeat_time_unit = #{sequenceRepeatTimeUnit,jdbcType=VARCHAR},
+            create_time          = #{createTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--auto generated by MybatisCodeHelper on 2022-05-24-->
+    <select id="selectAllBySequenceOwnerId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from final_sequence
+        where sequence_owner_id = #{sequenceOwnerId,jdbcType=INTEGER}
+    </select>
+
+    <!--auto generated by MybatisCodeHelper on 2022-05-25-->
+    <select id="countBySequenceOwnerId" resultType="java.lang.Integer">
+        select count(1)
+        from final_sequence
+        where sequence_owner_id = #{sequenceOwnerId,jdbcType=INTEGER}
+    </select>
+
+    <!--auto generated by MybatisCodeHelper on 2022-05-25-->
+    <delete id="deleteById">
+        delete
+        from final_sequence
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <!--auto generated by MybatisCodeHelper on 2022-05-27-->
+    <select id="selectIsCookieInheritBySequenceOwnerId" resultType="java.lang.Boolean">
+        select is_cookie_inherit
+        from final_sequence
+        where sequence_owner_id = #{sequenceOwnerId,jdbcType=INTEGER}
+    </select>
+
+    <!--auto generated by MybatisCodeHelper on 2022-05-29-->
+    <select id="selectAllBySequenceEnabled" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from final_sequence
+        where sequence_enabled = #{sequenceEnabled,jdbcType=BOOLEAN}
+    </select>
+
+    <!--auto generated by MybatisCodeHelper on 2022-05-29-->
+    <update id="updateSequenceEnabledById">
+        update final_sequence
+        set sequence_enabled=#{updatedSequenceEnabled,jdbcType=BOOLEAN}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--auto generated by MybatisCodeHelper on 2022-05-30-->
+    <select id="selectSequenceRequestsBySequenceOwnerId" resultMap="RequestsListMap">
+        select sequence_requests
+        from final_sequence
+        where sequence_owner_id = #{sequenceOwnerId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectSequenceHistoryBySequenceOwnerId" resultType="java.lang.String">
+        select sequence_redis_uuid
+        from final_history_sequence
+        where final_history_sequence.sequence_id in
+              (select id from final_sequence where sequence_owner_id = #{sequenceOwnerId,jdbcType=INTEGER})
+    </select>
+
+<!--auto generated by MybatisCodeHelper on 2022-05-31-->
+    <select id="selectAllByIsCookieInherit" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from final_sequence
+        where is_cookie_inherit=#{isCookieInherit,jdbcType=BOOLEAN}
+    </select>
+</mapper>
